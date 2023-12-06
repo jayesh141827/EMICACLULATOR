@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.security.Principal;
 import java.text.DecimalFormat;
 
 
@@ -35,13 +36,26 @@ public class MainActivity extends AppCompatActivity {
         btnCALULATE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double P = Integer.parseInt(textedit1.getText().toString());
-                double intre = Integer.parseInt(textedit3.getText().toString());
-                double loan = Integer.parseInt(textedit3.getText().toString());
-                double ans;
+                int amt = Integer.parseInt(textedit1.getText().toString());
 
-                ans = P * intre %;
-                txtans.setText(new DecimalFormat().format(ans));
+                double rest =  Double.parseDouble(textedit2.getText().toString());
+                int mon = Integer.parseInt(textedit3.getText().toString());
+
+                double r = rest/(12+100);
+                double ans1 = 1;
+
+                for (int i = 0; i <mon; i++) {
+                    ans1 = (1+r);
+                }
+
+                double ans = amt * r  * (ans1/(ans1-1));
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits (1);
+                txtans.setText("EMI "+df.format(ans));
+                double tamt = ans*mon;
+                txt2.setText("Total Amount : "+df.format(tamt));
+                double iamt = tamt-amt;
+                btnCALULATE.setText("Instrest Amount : "+df.format(iamt));
 
 
             }
